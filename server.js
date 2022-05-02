@@ -4,9 +4,11 @@
 //import requirejs from "requirejs";
 
 // Require Express.js
+const morgan = require('morgan')
 const express = require('express')
 const app = express()
 const db = require('./database')
+const fs = require('fs')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port'];
