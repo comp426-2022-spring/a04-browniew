@@ -10,7 +10,9 @@ const db = require('./database')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port'];
+args['log'];
 const port = args.port || 5000
+const log = args.log || 'true'
 
 // Require minimist module
 //const args = require('minimist')(process.argv.slice(2))
@@ -43,6 +45,14 @@ if (args.help || args.h) {
 const server = app.listen(port, () => {
   console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
+
+if (log == 'true') {
+  // Use morgan for logging to files
+// Create a write stream to append (flags: 'a') to a file
+const WRITESTREAM = fs.createWriteStream('FILE', { flags: 'a' })
+// Set up the access logging middleware
+app.use(morgan('FORMAT', { stream: WRITESTREAM }))
+}
 
 app.use( (req, res, next) => {
   // Your middleware goes here.
